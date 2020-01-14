@@ -1,19 +1,19 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
-import Header from './components/Header';
-import {Test} from './screens';
+import {enableScreens} from 'react-native-screens';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+
+import {rootReducer} from './store/reducers';
+import {ShopsNavigator} from './navigation';
+
+enableScreens();
+
+const store = createStore(rootReducer);
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header title="Guess a number" />
-      <Test />
-    </SafeAreaView>
+    <Provider store={store}>
+      <ShopsNavigator />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-});
