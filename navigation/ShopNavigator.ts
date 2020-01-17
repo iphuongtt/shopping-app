@@ -1,8 +1,9 @@
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
 import {Platform} from 'react-native';
+
 import {colors} from '../constants';
-import {ProductsOverviewScreen} from '../screens/shop';
+import {ProductsOverviewScreen, ProductDetailScreen} from '../screens/shop';
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -20,6 +21,7 @@ const defaultStackNavOptions = {
 const ProductsStackNavigator = createStackNavigator(
   {
     ProductsOverview: ProductsOverviewScreen,
+    ProductDetail: ProductDetailScreen,
   },
   {
     initialRouteName: 'ProductsOverview',
