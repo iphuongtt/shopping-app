@@ -1,11 +1,13 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, Platform} from 'react-native';
 import {NavigationStackScreenComponent} from 'react-navigation-stack';
 import {useDispatch} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import {useTypedSelector} from '../../store/reducers';
 import {addToCart} from '../../store/actions';
 import {ProductItem} from '../../components/shop';
+import {CustomHeaderButton as HeaderButton} from '../../components/UI';
 
 export const ProductsOverviewScreen: NavigationStackScreenComponent = props => {
   const products = useTypedSelector(state => state.products.availableProducts);
@@ -38,6 +40,17 @@ export const ProductsOverviewScreen: NavigationStackScreenComponent = props => {
 
 ProductsOverviewScreen.navigationOptions = {
   headerTitle: 'All Products',
+  headerRight: () => {
+    return (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Add To Cart"
+          iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+          onPress={() => {}}
+        />
+      </HeaderButtons>
+    );
+  },
 };
 
 export default ProductsOverviewScreen;
