@@ -1,12 +1,15 @@
 import React from 'react';
 import {FlatList} from 'react-native';
 import {NavigationStackScreenComponent} from 'react-navigation-stack';
+import {useDispatch} from 'react-redux';
 
 import {useTypedSelector} from '../../store/reducers';
+import {addToCart} from '../../store/actions';
 import {ProductItem} from '../../components/shop';
 
 export const ProductsOverviewScreen: NavigationStackScreenComponent = props => {
   const products = useTypedSelector(state => state.products.availableProducts);
+  const dispatch = useDispatch();
   return (
     <FlatList
       data={products}
@@ -24,7 +27,9 @@ export const ProductsOverviewScreen: NavigationStackScreenComponent = props => {
               },
             });
           }}
-          onAddToCart={() => {}}
+          onAddToCart={() => {
+            dispatch(addToCart(itemData.item));
+          }}
         />
       )}
     />

@@ -6,9 +6,11 @@ import {Provider} from 'react-redux';
 import {rootReducer} from './store/reducers';
 import {ShopsNavigator} from './navigation';
 
+import {composeWithDevTools} from 'redux-devtools-extension';
+
 enableScreens();
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools());
 
 export default function App() {
   return (
