@@ -1,4 +1,9 @@
-import {CartState, CartActionTypes, ADD_TO_CART} from '../types';
+import {
+  CartState,
+  CartActionTypes,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+} from '../types';
 import {CartItem} from '../../models';
 
 const initialState: CartState = {
@@ -28,6 +33,30 @@ export const cartReducer = (
         ...state,
         items: {...state.items, [addedProduct.id]: udpatedOrNewCartItem},
         totalAmount: state.totalAmount + prodPrice,
+      };
+    }
+    case REMOVE_FROM_CART: {
+      const currentQty = state.items[action.pid].quanity;
+      const selectedItem = state.items[action.pid];
+      let updatedCartItems;
+      if (currentQty > 1) {
+        // reduce it
+        const updatedCartItem = new CartItem(
+          selectedItem.quanity - 1,
+          selectedItem.productPrice,
+          selectedItem.productTitle,
+          selectedItem.sum - selectedItem.productPrice,
+        );
+        updatedCartItems = {...state.items, [action.pid]: updatedCartItem};
+      } else {
+        // ease it
+        updatedCartItems = {...state.items};
+        delete updatedCartItems[action.pid];
+      }
+      return {
+        ...state,
+        items: updatedCartItems,
+        totalAmount: state.totalAmount - selectedItem.productPrice,
       };
     }
     default:
