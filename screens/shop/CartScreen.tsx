@@ -1,13 +1,14 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet, FlatList} from 'react-native';
 import {useDispatch} from 'react-redux';
+import {NavigationStackScreenComponent} from 'react-navigation-stack';
 
 import {useTypedSelector} from '../../store/reducers';
 import {removeFromCart, addOrder} from '../../store/actions';
 import {CartItem} from '../../components/shop';
 import {CartItem as CartItemModel} from '../../models';
 
-export const CartScreen = () => {
+export const CartScreen: NavigationStackScreenComponent = props => {
   const dispatch = useDispatch();
   const cartTotal = useTypedSelector(state => state.cart.totalAmount);
   const cartItems: CartItemModel[] = useTypedSelector(state => {
@@ -35,6 +36,7 @@ export const CartScreen = () => {
           title="Order Now"
           onPress={() => {
             dispatch(addOrder(cartItems, cartTotal));
+            props.navigation.navigate('Order');
           }}
           disabled={cartItems.length === 0}
         />
@@ -80,5 +82,9 @@ const styles = StyleSheet.create({
   summaryText: {},
   amount: {},
 });
+
+CartScreen.navigationOptions = {
+  headerTitle: 'Your Cart',
+};
 
 export default CartScreen;

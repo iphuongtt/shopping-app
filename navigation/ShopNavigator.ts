@@ -1,4 +1,5 @@
 import {createStackNavigator} from 'react-navigation-stack';
+import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createAppContainer} from 'react-navigation';
 import {Platform} from 'react-native';
 
@@ -7,6 +8,7 @@ import {
   ProductsOverviewScreen,
   ProductDetailScreen,
   CartScreen,
+  OrdersScreen,
 } from '../screens/shop';
 
 const defaultStackNavOptions = {
@@ -31,7 +33,29 @@ const ProductsStackNavigator = createStackNavigator(
   {
     initialRouteName: 'ProductsOverview',
     defaultNavigationOptions: defaultStackNavOptions,
+    navigationOptions: {},
   },
 );
 
-export const ShopsNavigator = createAppContainer(ProductsStackNavigator);
+const OrderStackNavigator = createStackNavigator(
+  {
+    Order: OrdersScreen,
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  },
+);
+
+const MainNavigator = createDrawerNavigator(
+  {
+    Orders: OrderStackNavigator,
+    Products: ProductsStackNavigator,
+  },
+  {
+    contentOptions: {
+      activeTintColor: colors.primary,
+    },
+  },
+);
+
+export const ShopsNavigator = createAppContainer(MainNavigator);
