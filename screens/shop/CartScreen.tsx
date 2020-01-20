@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet, FlatList} from 'react-native';
 
 import {useTypedSelector} from '../../store/reducers';
-//import {CartItem} from '../../models';
+import {CartItem} from '../../components/shop';
 
 export const CartScreen = () => {
   const cartTotal = useTypedSelector(state => state.cart.totalAmount);
@@ -32,7 +32,18 @@ export const CartScreen = () => {
         />
       </View>
       <View>
-        <Text>CART ITEMS</Text>
+        <FlatList
+          data={cartItems}
+          keyExtractor={item => item.productId}
+          renderItem={itemData => (
+            <CartItem
+              title={itemData.item.productTitle}
+              quantity={itemData.item.quanity}
+              amount={itemData.item.sum}
+              onRemove={() => {}}
+            />
+          )}
+        />
       </View>
     </View>
   );

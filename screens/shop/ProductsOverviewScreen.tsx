@@ -38,19 +38,23 @@ export const ProductsOverviewScreen: NavigationStackScreenComponent = props => {
   );
 };
 
-ProductsOverviewScreen.navigationOptions = {
-  headerTitle: 'All Products',
-  headerRight: () => {
-    return (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Add To Cart"
-          iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-          onPress={() => {}}
-        />
-      </HeaderButtons>
-    );
-  },
+ProductsOverviewScreen.navigationOptions = ({navigation}) => {
+  return {
+    headerTitle: 'All Products',
+    headerRight: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Add To Cart"
+            iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+            onPress={() => {
+              navigation.navigate('Cart');
+            }}
+          />
+        </HeaderButtons>
+      );
+    },
+  };
 };
 
 export default ProductsOverviewScreen;
