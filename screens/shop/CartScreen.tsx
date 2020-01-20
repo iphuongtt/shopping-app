@@ -3,13 +3,14 @@ import {View, Text, Button, StyleSheet, FlatList} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import {useTypedSelector} from '../../store/reducers';
-import {removeFromCart} from '../../store/actions';
+import {removeFromCart, addOrder} from '../../store/actions';
 import {CartItem} from '../../components/shop';
+import {CartItem as CartItemModel} from '../../models';
 
 export const CartScreen = () => {
   const dispatch = useDispatch();
   const cartTotal = useTypedSelector(state => state.cart.totalAmount);
-  const cartItems = useTypedSelector(state => {
+  const cartItems: CartItemModel[] = useTypedSelector(state => {
     const transformedCartItems = [];
     for (const key in state.cart.items) {
       transformedCartItems.push({
@@ -32,7 +33,9 @@ export const CartScreen = () => {
         </Text>
         <Button
           title="Order Now"
-          onPress={() => {}}
+          onPress={() => {
+            dispatch(addOrder(cartItems, cartTotal));
+          }}
           disabled={cartItems.length === 0}
         />
       </View>
