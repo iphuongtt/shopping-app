@@ -1,10 +1,11 @@
 import React from 'react';
-import {Text, FlatList, Platform} from 'react-native';
+import {FlatList, Platform} from 'react-native';
 import {NavigationStackScreenComponent} from 'react-navigation-stack';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import {useTypedSelector} from '../../store/reducers';
 import {CustomHeaderButton} from '../../components/UI';
+import {OrderItem} from '../../components/shop';
 
 export const OrdersScreen: NavigationStackScreenComponent = () => {
   const orders = useTypedSelector(state => state.orders.orders);
@@ -12,7 +13,10 @@ export const OrdersScreen: NavigationStackScreenComponent = () => {
     <FlatList
       data={orders}
       renderItem={itemData => (
-        <Text>{`${itemData.item.id} ${itemData.item.totalAmount}`}</Text>
+        <OrderItem
+          amount={itemData.item.totalAmount}
+          date={itemData.item.readableDate}
+        />
       )}
     />
   );
