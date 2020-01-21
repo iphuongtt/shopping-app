@@ -50,6 +50,7 @@ export const CartScreen: NavigationStackScreenComponent = props => {
               title={itemData.item.productTitle}
               quantity={itemData.item.quanity}
               amount={itemData.item.sum}
+              deleteAble={true}
               onRemove={() => {
                 dispatch(removeFromCart(itemData.item.productId));
               }}

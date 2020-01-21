@@ -9,6 +9,7 @@ interface Props extends ViewProps {
   quantity: number;
   title: string;
   amount: number;
+  deleteAble: boolean;
 }
 
 export const CartItem = (props: Props) => {
@@ -23,13 +24,17 @@ export const CartItem = (props: Props) => {
       </Text>
       <View style={styles.itemData}>
         <Text style={styles.mainText}>${props.amount.toFixed(2)}</Text>
-        <TouchableOpacity onPress={onRemoveHandler} style={styles.deleteButton}>
-          <Icon
-            name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
-            size={23}
-            color="red"
-          />
-        </TouchableOpacity>
+        {props.deleteAble && (
+          <TouchableOpacity
+            onPress={onRemoveHandler}
+            style={styles.deleteButton}>
+            <Icon
+              name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+              size={23}
+              color="red"
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
