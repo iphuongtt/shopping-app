@@ -3,6 +3,7 @@ import {
   CartActionTypes,
   ADD_TO_CART,
   REMOVE_FROM_CART,
+  ADD_ORDER,
 } from '../types';
 import {CartItem} from '../../models';
 
@@ -58,6 +59,9 @@ export const cartReducer = (
         items: updatedCartItems,
         totalAmount: state.totalAmount - selectedItem.productPrice,
       };
+    }
+    case ADD_ORDER: {
+      return initialState;
     }
     default:
       return state;
