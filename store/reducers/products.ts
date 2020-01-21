@@ -21,7 +21,15 @@ export const productsReducer = (
     }
 
     case DELETE_PRODUCT: {
-      return state;
+      return {
+        ...state,
+        availableProducts: state.availableProducts.filter(
+          product => product.id !== action.productId,
+        ),
+        userProducts: state.userProducts.filter(
+          product => product.id !== action.productId,
+        ),
+      };
     }
     default:
       return state;

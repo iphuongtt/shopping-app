@@ -2,7 +2,7 @@ import {CartItem, Order} from '../../models';
 
 export const ADD_ORDER = 'ADD_ORDER';
 
-interface AddOrderAction {
+export interface AddOrderAction {
   type: typeof ADD_ORDER;
   orderData: {
     cartItems: CartItem[];

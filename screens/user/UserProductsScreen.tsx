@@ -1,10 +1,12 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 import {FlatList, Button, Platform} from 'react-native';
 import {NavigationStackScreenComponent} from 'react-navigation-stack';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import {ProductItem} from '../../components/shop';
 import {useTypedSelector} from '../../store/reducers';
+import {deleteProduct} from '../../store/actions';
 import {CustomHeaderButton} from '../../components/UI';
 import {colors} from '../../constants';
 import {Product} from '../../models';
@@ -15,12 +17,11 @@ export const UserProductsScreen: NavigationStackScreenComponent = () => {
   const handleSelectItem = (itemData: Product) => {
     console.log(itemData);
   };
-  const handleDeleteItem = (productId: PropType<Product, 'id'>) => {
-    console.log(productId);
-  };
   const handleEditItem = (productId: PropType<Product, 'id'>) => {
     console.log(productId);
   };
+
+  const dispatch = useDispatch();
   return (
     <FlatList
       data={userProducts}
@@ -38,7 +39,7 @@ export const UserProductsScreen: NavigationStackScreenComponent = () => {
           <Button
             color={colors.primary}
             title="Delete"
-            onPress={() => handleDeleteItem(itemData.item.id)}
+            onPress={() => dispatch(deleteProduct(itemData.item.id))}
           />
         </ProductItem>
       )}

@@ -9,7 +9,7 @@ interface AddNewProductAction {
   product: Product;
 }
 
-interface DeleteProduct {
+export interface DeleteProductAction {
   type: typeof DELETE_PRODUCT;
   productId: PropType<Product, 'id'>;
 }
@@ -19,4 +19,4 @@ export interface ProductState {
   userProducts: Product[];
 }
 
-export type ProductActionTypes = AddNewProductAction | DeleteProduct;
+export type ProductActionTypes = AddNewProductAction | DeleteProductAction;
