@@ -13,6 +13,8 @@ import {
   OrdersScreen,
 } from '../screens/shop';
 
+import {UserProductsScreen} from '../screens/user';
+
 const defaultStackNavOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === 'android' ? colors.primary : '',
@@ -65,10 +67,29 @@ const OrderStackNavigator = createStackNavigator(
   },
 );
 
+const AdminStackNavigator = createStackNavigator(
+  {
+    User: UserProductsScreen,
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+    navigationOptions: {
+      drawerIcon: ({tintColor}) => (
+        <Icon
+          name={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+          size={23}
+          color={tintColor}
+        />
+      ),
+    },
+  },
+);
+
 const MainNavigator = createDrawerNavigator(
   {
     Orders: OrderStackNavigator,
     Products: ProductsStackNavigator,
+    Admin: AdminStackNavigator,
   },
   {
     contentOptions: {
