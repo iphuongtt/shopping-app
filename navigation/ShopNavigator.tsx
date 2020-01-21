@@ -13,7 +13,7 @@ import {
   OrdersScreen,
 } from '../screens/shop';
 
-import {UserProductsScreen} from '../screens/user';
+import {UserProductsScreen, EditProductScreen} from '../screens/user';
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -69,7 +69,8 @@ const OrderStackNavigator = createStackNavigator(
 
 const AdminStackNavigator = createStackNavigator(
   {
-    User: UserProductsScreen,
+    UserProducts: UserProductsScreen,
+    EditProduct: EditProductScreen,
   },
   {
     defaultNavigationOptions: defaultStackNavOptions,

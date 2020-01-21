@@ -10,15 +10,16 @@ import {deleteProduct} from '../../store/actions';
 import {CustomHeaderButton} from '../../components/UI';
 import {colors} from '../../constants';
 import {Product} from '../../models';
-import {PropType} from '../../types';
 
-export const UserProductsScreen: NavigationStackScreenComponent = () => {
+export const UserProductsScreen: NavigationStackScreenComponent = ({
+  navigation,
+}) => {
   const userProducts = useTypedSelector(state => state.products.userProducts);
-  const handleSelectItem = (itemData: Product) => {
-    console.log(itemData);
-  };
-  const handleEditItem = (productId: PropType<Product, 'id'>) => {
-    console.log(productId);
+  const handleSelectProduct = (itemData: Product) => {
+    navigation.navigate('EditProduct', {
+      productId: itemData.id,
+      title: itemData.title,
+    });
   };
 
   const dispatch = useDispatch();
@@ -30,11 +31,11 @@ export const UserProductsScreen: NavigationStackScreenComponent = () => {
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}
-          onSelect={() => handleSelectItem(itemData.item)}>
+          onSelect={() => handleSelectProduct(itemData.item)}>
           <Button
             color={colors.primary}
             title="Edit"
-            onPress={() => handleEditItem(itemData.item.id)}
+            onPress={() => handleSelectProduct(itemData.item)}
           />
           <Button
             color={colors.primary}
