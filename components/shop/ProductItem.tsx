@@ -4,29 +4,23 @@ import {
   Text,
   Image,
   StyleSheet,
-  Button,
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
 } from 'react-native';
 
 import {ViewProps} from '../../interfaces';
-import {colors} from '../../constants';
 
 interface Props extends ViewProps {
   image: string;
   title: string;
   price: number;
-  onViewDetail: Function;
-  onAddToCart: Function;
+  onSelect: Function;
 }
 
 export const ProductItem = (props: Props) => {
-  const handleViewDetail = () => {
-    props.onViewDetail();
-  };
-  const handleAddToCart = () => {
-    props.onAddToCart();
+  const handleSelect = () => {
+    props.onSelect();
   };
   let TouchableComp: any = TouchableOpacity;
   if (Platform.OS === 'android' && Platform.Version > 23) {
@@ -35,7 +29,7 @@ export const ProductItem = (props: Props) => {
   return (
     <View style={styles.product}>
       <View style={styles.touchable}>
-        <TouchableComp onPress={handleViewDetail} useForeground>
+        <TouchableComp onPress={handleSelect} useForeground>
           <View>
             <View style={styles.imageContainer}>
               <Image style={styles.image} source={{uri: props.image}} />
@@ -44,18 +38,7 @@ export const ProductItem = (props: Props) => {
               <Text style={styles.title}>{props.title}</Text>
               <Text style={styles.price}>${props.price.toFixed(2)}</Text>
             </View>
-            <View style={styles.actions}>
-              <Button
-                color={colors.primary}
-                title="View Details"
-                onPress={handleViewDetail}
-              />
-              <Button
-                color={colors.primary}
-                title="To Cart"
-                onPress={handleAddToCart}
-              />
-            </View>
+            <View style={styles.actions}>{props.children}</View>
           </View>
         </TouchableComp>
       </View>

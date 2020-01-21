@@ -1,14 +1,26 @@
 import React from 'react';
-import {FlatList, Platform} from 'react-native';
+import {FlatList, Button, Platform} from 'react-native';
 import {NavigationStackScreenComponent} from 'react-navigation-stack';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import {ProductItem} from '../../components/shop';
 import {useTypedSelector} from '../../store/reducers';
 import {CustomHeaderButton} from '../../components/UI';
+import {colors} from '../../constants';
+import {Product} from '../../models';
+import {PropType} from '../../types';
 
 export const UserProductsScreen: NavigationStackScreenComponent = () => {
   const userProducts = useTypedSelector(state => state.products.userProducts);
+  const handleSelectItem = (itemData: Product) => {
+    console.log(itemData);
+  };
+  const handleDeleteItem = (productId: PropType<Product, 'id'>) => {
+    console.log(productId);
+  };
+  const handleEditItem = (productId: PropType<Product, 'id'>) => {
+    console.log(productId);
+  };
   return (
     <FlatList
       data={userProducts}
@@ -17,9 +29,18 @@ export const UserProductsScreen: NavigationStackScreenComponent = () => {
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}
-          onViewDetail={() => {}}
-          onAddToCart={() => {}}
-        />
+          onSelect={() => handleSelectItem(itemData.item)}>
+          <Button
+            color={colors.primary}
+            title="Edit"
+            onPress={() => handleEditItem(itemData.item.id)}
+          />
+          <Button
+            color={colors.primary}
+            title="Delete"
+            onPress={() => handleDeleteItem(itemData.item.id)}
+          />
+        </ProductItem>
       )}
     />
   );
