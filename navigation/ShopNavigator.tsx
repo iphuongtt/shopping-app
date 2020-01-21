@@ -1,7 +1,9 @@
+import React from 'react';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createAppContainer} from 'react-navigation';
 import {Platform} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import {colors} from '../constants';
 import {
@@ -33,7 +35,15 @@ const ProductsStackNavigator = createStackNavigator(
   {
     initialRouteName: 'ProductsOverview',
     defaultNavigationOptions: defaultStackNavOptions,
-    navigationOptions: {},
+    navigationOptions: {
+      drawerIcon: ({tintColor}) => (
+        <Icon
+          name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+          size={23}
+          color={tintColor}
+        />
+      ),
+    },
   },
 );
 
@@ -43,6 +53,15 @@ const OrderStackNavigator = createStackNavigator(
   },
   {
     defaultNavigationOptions: defaultStackNavOptions,
+    navigationOptions: {
+      drawerIcon: ({tintColor}) => (
+        <Icon
+          name={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
+          size={23}
+          color={tintColor}
+        />
+      ),
+    },
   },
 );
 
