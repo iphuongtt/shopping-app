@@ -60,6 +60,17 @@ UserProductsScreen.navigationOptions = ({navigation}) => {
         />
       </HeaderButtons>
     ),
+    headerRight: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="create"
+            iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+            onPress={() => navigation.navigate('EditProduct')}
+          />
+        </HeaderButtons>
+      );
+    },
   };
 };
 export default UserProductsScreen;

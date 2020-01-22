@@ -9,10 +9,11 @@ import {
 } from 'react-native';
 import {NavigationStackScreenComponent} from 'react-navigation-stack';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {useDispatch} from 'react-redux';
 
 import {CustomHeaderButton} from '../../components/UI';
-import {Product} from '../../models';
 import {useTypedSelector} from '../../store/reducers';
+import {createProduct, updateProduct} from '../../store/actions';
 
 export const EditProductScreen: NavigationStackScreenComponent = ({
   navigation,
@@ -31,10 +32,15 @@ export const EditProductScreen: NavigationStackScreenComponent = ({
     editedProduct ? editedProduct.description : '',
   );
 
+  const dispatch = useDispatch();
+
   const handleSave = useCallback(() => {
-    const product = new Product('', '', title, imageURL, description, price);
-    console.log(product);
-  }, [title, imageURL, price, description]);
+    if (prodId) {
+      dispatch(updateProduct(prodId, title, description, imageURL));
+    } else {
+      dispatch(createProduct(title, description, imageURL, price));
+    }
+  }, [prodId, title, imageURL, price, description, dispatch]);
 
   useEffect(() => {
     navigation.setParams({handleSave});
@@ -65,7 +71,7 @@ export const EditProductScreen: NavigationStackScreenComponent = ({
             <Text style={styles.label}>Price</Text>
             <TextInput
               style={styles.input}
-              value={editedProduct.price.toString()}
+              value={price.toString()}
               onChangeText={text => setPrice(Number(text))}
             />
           </View>

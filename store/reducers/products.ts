@@ -3,8 +3,10 @@ import {
   ProductState,
   ProductActionTypes,
   DELETE_PRODUCT,
-  ADD_NEW_PRODUCT,
+  CREATE_PRODUCT,
+  UPDATE_PRODUCT,
 } from '../types';
+import {Product} from '../../models';
 
 const initialState: ProductState = {
   availableProducts: PRODUCTS,
@@ -16,8 +18,49 @@ export const productsReducer = (
   action: ProductActionTypes,
 ): ProductState => {
   switch (action.type) {
-    case ADD_NEW_PRODUCT: {
-      return state;
+    case CREATE_PRODUCT: {
+      const productData = action.productData;
+      const newProduct = new Product(
+        new Date().toString(),
+        'u1',
+        productData.title,
+        productData.imageUrl,
+        productData.description,
+        productData.price,
+      );
+      return {
+        ...state,
+        availableProducts: state.availableProducts.concat(newProduct),
+        userProducts: state.userProducts.concat(newProduct),
+      };
+    }
+
+    case UPDATE_PRODUCT: {
+      const productData = action.productData;
+      const productIndex = state.userProducts.findIndex(
+        product => product.id === action.pid,
+      );
+      const updatedProduct = new Product(
+        action.pid,
+        'u1',
+        productData.title,
+        productData.imageUrl,
+        productData.description,
+        state.userProducts[productIndex].price,
+      );
+      const updatedUserProducts = state.userProducts;
+      updatedUserProducts[productIndex] = updatedProduct;
+
+      const availableProductIndex = state.availableProducts.findIndex(
+        product => product.id === action.pid,
+      );
+      const updatedAvailableProducts = state.availableProducts;
+      updatedAvailableProducts[availableProductIndex] = updatedProduct;
+      return {
+        ...state,
+        userProducts: updatedUserProducts,
+        availableProducts: updatedAvailableProducts,
+      };
     }
 
     case DELETE_PRODUCT: {
