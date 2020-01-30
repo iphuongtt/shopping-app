@@ -24,6 +24,7 @@ export const EditProductScreen: NavigationStackScreenComponent = ({
   );
 
   const [title, setTitle] = useState(editedProduct ? editedProduct.title : '');
+  const [titleIsValid, setTitleIsValid] = useState(false);
   const [imageURL, setImageURL] = useState(
     editedProduct ? editedProduct.imageUrl : '',
   );
@@ -44,6 +45,15 @@ export const EditProductScreen: NavigationStackScreenComponent = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prodId, title, imageURL, price, description, dispatch]);
 
+  const titleChangeHandler = (text: string) => {
+    if (text.trim().length === 0) {
+      setTitleIsValid(false);
+    } else {
+      setTitleIsValid(true);
+      setTitle(text);
+    }
+  };
+
   useEffect(() => {
     navigation.setParams({handleSave});
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,8 +67,13 @@ export const EditProductScreen: NavigationStackScreenComponent = ({
           <TextInput
             style={styles.input}
             value={title}
-            onChangeText={text => setTitle(text)}
+            onChangeText={titleChangeHandler}
+            autoCapitalize="sentences"
+            autoCorrect={false}
+            returnKeyType="next"
+            onEndEditing={() => console.log('onEndEditing')}
           />
+          {!titleIsValid && <Text>Please enter a valid title!</Text>}
         </View>
         <View style={styles.formControl}>
           <Text style={styles.label}>Image URL</Text>
@@ -75,6 +90,7 @@ export const EditProductScreen: NavigationStackScreenComponent = ({
               style={styles.input}
               value={price.toString()}
               onChangeText={text => setPrice(Number(text))}
+              keyboardType="decimal-pad"
             />
           </View>
         )}
