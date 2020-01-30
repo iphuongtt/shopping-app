@@ -40,6 +40,8 @@ export const EditProductScreen: NavigationStackScreenComponent = ({
     } else {
       dispatch(createProduct(title, description, imageURL, price));
     }
+    navigation.goBack();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prodId, title, imageURL, price, description, dispatch]);
 
   useEffect(() => {
