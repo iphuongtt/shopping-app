@@ -48,13 +48,13 @@ export const productsReducer = (
         productData.description,
         state.userProducts[productIndex].price,
       );
-      const updatedUserProducts = state.userProducts;
+      const updatedUserProducts = [...state.userProducts];
       updatedUserProducts[productIndex] = updatedProduct;
 
       const availableProductIndex = state.availableProducts.findIndex(
         product => product.id === action.pid,
       );
-      const updatedAvailableProducts = state.availableProducts;
+      const updatedAvailableProducts = [...state.availableProducts];
       updatedAvailableProducts[availableProductIndex] = updatedProduct;
       return {
         ...state,
