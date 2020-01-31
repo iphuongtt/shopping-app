@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Platform,
+  Alert,
 } from 'react-native';
 import {NavigationStackScreenComponent} from 'react-navigation-stack';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -36,6 +37,12 @@ export const EditProductScreen: NavigationStackScreenComponent = ({
   const dispatch = useDispatch();
 
   const handleSave = useCallback(() => {
+    if (!titleIsValid) {
+      Alert.alert('Wrong input!', 'Please check the errors in the form.', [
+        {text: 'Okay'},
+      ]);
+      return;
+    }
     if (prodId) {
       dispatch(updateProduct(prodId, title, description, imageURL));
     } else {
