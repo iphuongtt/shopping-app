@@ -13,7 +13,7 @@ import {useDispatch} from 'react-redux';
 
 import {CustomHeaderButton, Input} from '../../components/UI';
 import {useTypedSelector} from '../../store/reducers';
-import {createProduct, updateProduct} from '../../store/actions';
+import {postProduct, updateProduct} from '../../store/actions';
 
 interface FormState {
   inputValues: {
@@ -106,7 +106,7 @@ export const EditProductScreen: NavigationStackScreenComponent = ({
       );
     } else {
       dispatch(
-        createProduct(
+        postProduct(
           formState.inputValues.title,
           formState.inputValues.description,
           formState.inputValues.imageURL,

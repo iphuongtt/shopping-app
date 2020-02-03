@@ -5,6 +5,7 @@ import {
   DELETE_PRODUCT,
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
+  SET_PRODUCT,
 } from '../types';
 import {Product} from '../../models';
 
@@ -21,7 +22,7 @@ export const productsReducer = (
     case CREATE_PRODUCT: {
       const productData = action.productData;
       const newProduct = new Product(
-        new Date().toString(),
+        productData.id,
         'u1',
         productData.title,
         productData.imageUrl,
@@ -71,6 +72,16 @@ export const productsReducer = (
         ),
         userProducts: state.userProducts.filter(
           product => product.id !== action.productId,
+        ),
+      };
+    }
+
+    case SET_PRODUCT: {
+      return {
+        ...state,
+        availableProducts: action.products,
+        userProducts: action.products.filter(
+          product => product.ownerId === 'u1',
         ),
       };
     }
